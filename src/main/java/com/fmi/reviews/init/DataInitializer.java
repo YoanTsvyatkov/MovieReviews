@@ -25,6 +25,8 @@ public class DataInitializer implements CommandLineRunner {
 
     private MovieReviewRepository movieReviewRepository;
 
+    private PasswordEncoder passwordEncoder;
+
     private static List<MovieReview> reviews = List.of(new MovieReview("test", 6, "test")
             , new MovieReview("test1", 10, "test1")
             , new MovieReview("test2", 1, "test2"));
@@ -49,10 +51,11 @@ public class DataInitializer implements CommandLineRunner {
                     Set.of(reviews.get(2))));
 
     @Autowired
-    public DataInitializer(UserRepository userRepository, MovieRepository movieRepository, MovieReviewRepository movieReviewRepository) {
+    public DataInitializer(UserRepository userRepository, MovieRepository movieRepository, MovieReviewRepository movieReviewRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.movieRepository = movieRepository;
         this.movieReviewRepository = movieReviewRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -63,8 +66,7 @@ public class DataInitializer implements CommandLineRunner {
 
         if (userRepository.count() == 0) {
             users.forEach(u -> {
-                PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-                u.setPassword(encoder.encode(u.getPassword()));
+                u.setPassword(passwordEncoder.encode(u.getPassword()));
 
                 userRepository.saveAndFlush(u);
             });

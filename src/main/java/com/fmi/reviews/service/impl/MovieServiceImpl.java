@@ -4,12 +4,11 @@ import com.fmi.reviews.dao.MovieRepository;
 import com.fmi.reviews.exception.InvalidEntityDataException;
 import com.fmi.reviews.exception.UnexistingEntityException;
 import com.fmi.reviews.model.Movie;
-import com.fmi.reviews.service.MovieReviewService;
 import com.fmi.reviews.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -56,7 +55,7 @@ public class MovieServiceImpl implements MovieService {
 
         getMovie(id);
 
-        movie.setModified(new Date());
+        movie.setModified(LocalDateTime.now());
         return movieRepository.save(movie);
     }
 

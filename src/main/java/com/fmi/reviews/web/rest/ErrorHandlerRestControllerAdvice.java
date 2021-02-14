@@ -4,7 +4,10 @@ import com.fmi.reviews.exception.InvalidEntityDataException;
 import com.fmi.reviews.exception.UnautorizedRequestException;
 import com.fmi.reviews.exception.UnexistingEntityException;
 import com.fmi.reviews.model.ErrorResponse;
+import com.fmi.reviews.web.mvc.ErrorHandlerMvcControllerAdvice;
 import io.jsonwebtoken.JwtException;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -12,8 +15,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice(basePackageClasses = ErrorHandlerControllerAdvice.class)
-public class ErrorHandlerControllerAdvice {
+@ControllerAdvice(basePackageClasses = ErrorHandlerMvcControllerAdvice.class)
+public class ErrorHandlerRestControllerAdvice {
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handleInvalidDataException(InvalidEntityDataException ex) {

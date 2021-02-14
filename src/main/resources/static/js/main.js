@@ -1,22 +1,54 @@
-$(document).ready(function() {
-    $("#locales").change(function () {
-        var selectedOption = $('#locales').val();
-        if (selectedOption != ''){
-            window.location.replace(window.location.pathname + '?lang=' + selectedOption);
-        }
+// ---------Responsive-navbar-active-animation-----------
+function test(){
+    var tabsNewAnim = $('#navbarSupportedContent');
+    var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+    var activeItemNewAnim = tabsNewAnim.find('.active');
+    var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+    var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+    var itemPosNewAnimTop = activeItemNewAnim.position();
+    var itemPosNewAnimLeft = activeItemNewAnim.position();
+    $(".hori-selector").css({
+        "top":itemPosNewAnimTop.top + "px",
+        "left":itemPosNewAnimLeft.left + "px",
+        "height": activeWidthNewAnimHeight + "px",
+        "width": activeWidthNewAnimWidth + "px"
     });
-
-    // Custom file input init
-    bsCustomFileInput.init();
-
-    // Picture modal
-    $('#exampleModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var url = button.data('image-url'); // Extract info from data-* attributes
-        var title = button.data('image-title'); // Extract info from data-* attributes
-        var modal = $(this);
-        modal.find('.modal-title').text(title);
-        modal.find('.modal-body img').attr('src', url);
-        modal.find('.modal-body img').attr('alt', title);
-    })
+    $("#navbarSupportedContent").on("click","li",function(e){
+        $('#navbarSupportedContent ul li').removeClass("active");
+        $(this).addClass('active');
+        var activeWidthNewAnimHeight = $(this).innerHeight();
+        var activeWidthNewAnimWidth = $(this).innerWidth();
+        var itemPosNewAnimTop = $(this).position();
+        var itemPosNewAnimLeft = $(this).position();
+        $(".hori-selector").css({
+            "top":itemPosNewAnimTop.top + "px",
+            "left":itemPosNewAnimLeft.left + "px",
+            "height": activeWidthNewAnimHeight + "px",
+            "width": activeWidthNewAnimWidth + "px"
+        });
+    });
+}
+$(document).ready(function(){
+    setTimeout(function(){ test(); });
 });
+$(window).on('resize', function(){
+    setTimeout(function(){ test(); }, 500);
+});
+$(".navbar-toggler").click(function(){
+    setTimeout(function(){ test(); });
+});
+
+var app = angular.module('myApp', []);
+
+app.controller('AppCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+
+    $scope.autoExpand = function(e) {
+        var element = typeof e === 'object' ? e.target : document.getElementById(e);
+        var scrollHeight = element.scrollHeight -60; // replace 60 by the sum of padding-top and padding-bottom
+        element.style.height =  scrollHeight + "px";
+    };
+
+    function expand() {
+        $scope.autoExpand('TextArea');
+    }
+}]);

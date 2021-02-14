@@ -9,7 +9,7 @@ public interface MovieService {
     List<Movie> getMovies();
     Movie deleteMovie(Long id);
     Movie getMovie(Long id);
-    Movie addMovie(Movie user);
+    Movie addMovie(Movie movie);
     Movie updateMovie(Long id, Movie movie);
     long getMoviesCount();
 }

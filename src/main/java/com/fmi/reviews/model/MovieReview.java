@@ -2,13 +2,11 @@ package com.fmi.reviews.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.Date;
+import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -22,12 +20,11 @@ public class  MovieReview {
     private Long id;
 
     @NonNull
-    @NotNull
+    @NotBlank(message = "The text should not be empty")
     @Size(max = 1024)
     private String text;
 
     @NonNull
-    @NotNull
     @Min(1)
     @Max(10)
     private int rating;
@@ -45,6 +42,9 @@ public class  MovieReview {
     @ManyToOne
     private User user;
 
-    private Date created = new Date();
-    private Date modified = new Date();
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime created = LocalDateTime.now();
+
+    @DateTimeFormat(iso=DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime modified = LocalDateTime.now();
 }

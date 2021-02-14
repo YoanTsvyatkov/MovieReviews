@@ -4,6 +4,7 @@ import com.fmi.reviews.dao.MovieReviewRepository;
 import com.fmi.reviews.exception.InvalidEntityDataException;
 import com.fmi.reviews.exception.UnautorizedRequestException;
 import com.fmi.reviews.exception.UnexistingEntityException;
+import com.fmi.reviews.model.Movie;
 import com.fmi.reviews.model.MovieReview;
 import com.fmi.reviews.model.Role;
 import com.fmi.reviews.model.User;
@@ -13,8 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -88,7 +88,7 @@ public class MovieReviewServiceImpl implements MovieReviewService {
         }
 
         getReview(id);
-        review.setModified(new Date());
+        review.setModified(LocalDateTime.now());
         review.setUser(user);
         return movieReviewRepository.save(review);
     }
@@ -96,6 +96,11 @@ public class MovieReviewServiceImpl implements MovieReviewService {
     @Override
     public long getReviewsCount() {
         return movieReviewRepository.count();
+    }
+
+    @Override
+    public List<MovieReview> getReviewsOfMovie(Movie movie) {
+        return movieReviewRepository.findByMovie(movie);
     }
 
     private User getLoggedInUser() {

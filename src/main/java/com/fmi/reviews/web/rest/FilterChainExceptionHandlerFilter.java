@@ -24,7 +24,7 @@ public class FilterChainExceptionHandlerFilter extends OncePerRequestFilter {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private ErrorHandlerControllerAdvice controllerAdvice;
+    private ErrorHandlerRestControllerAdvice controllerAdvice;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
